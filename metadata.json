@@ -1,0 +1,5 @@
+{
+  "name": "Rose Lootbox Video Generator",
+  "description": "An application to generate a 3D animation of a loot box that releases a custom number of roses. The video is generated using the Gemini API.",
+  "requestFramePermissions": []
+}
