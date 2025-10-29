@@ -1,10 +1,10 @@
-
 export interface LootBox {
   id: number;
   name: string;
   color: string;
   gradient: string;
   shadow: string;
+  imageUrl: string;
 }
 
 export enum AppState {

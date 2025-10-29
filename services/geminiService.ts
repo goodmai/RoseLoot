@@ -1,19 +1,7 @@
 
+
 import { GoogleGenAI } from "@google/genai";
 import { LootBox } from '../types';
-
-// Fix: Address TS error about conflicting 'aistudio' declarations by defining
-// a named interface 'AIStudio' and using it, as hinted by the error message.
-interface AIStudio {
-  hasSelectedApiKey: () => Promise<boolean>;
-  openSelectKey: () => Promise<void>;
-}
-
-declare global {
-  interface Window {
-    aistudio: AIStudio;
-  }
-}
 
 const getAiClient = () => {
     if (!process.env.API_KEY) {
