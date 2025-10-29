@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { LootBox } from '../types';
 import { generateRoseVideo } from '../services/geminiService';
@@ -41,9 +40,6 @@ const GenerationScreen: React.FC<GenerationScreenProps> = ({ box, onVideoGenerat
     } catch (e: any) {
         console.error(e);
         onError(e.message || 'An unknown error occurred during video generation.');
-        if (e.message.includes("API key error")) {
-           onBack(); // Force user to re-select key
-        }
     } finally {
         setIsGenerating(false);
         setIsOpening(false);
@@ -96,7 +92,7 @@ const GenerationScreen: React.FC<GenerationScreenProps> = ({ box, onVideoGenerat
             </div>
         ) : (
             <div className='flex flex-col items-center'>
-                {error && <p className="text-red-400 mb-4 bg-red-900/50 p-3 rounded-lg">{error}</p>}
+                {error && <p className="text-red-400 mb-4 bg-red-900/50 p-3 rounded-lg max-w-md">{error}</p>}
                 <button
                     onClick={handleOpenClick}
                     className="px-10 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg text-xl
@@ -104,7 +100,7 @@ const GenerationScreen: React.FC<GenerationScreenProps> = ({ box, onVideoGenerat
                                disabled:opacity-50 disabled:scale-100 disabled:cursor-wait"
                     disabled={isOpening}
                 >
-                    {isOpening ? 'Opening...' : 'Open Box'}
+                    {isOpening ? 'Opening...' : error ? 'Try Again' : 'Open Box'}
                 </button>
             </div>
         )}
