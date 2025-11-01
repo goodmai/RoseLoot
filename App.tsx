@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { AppState, LootBox } from './types';
 import { LOOT_BOXES } from './constants';
@@ -30,8 +29,11 @@ const App: React.FC = () => {
   
   const handleGenerationError = (errorMessage: string) => {
     setError(errorMessage);
-    // Go back to selection, but keep the selected box in view to retry
-    setAppState(AppState.GENERATING_VIDEO);
+    if (errorMessage.includes("API key error")) {
+        setAppState(AppState.AUTHENTICATING);
+    } else {
+        setAppState(AppState.GENERATING_VIDEO);
+    }
   };
 
   const handleReset = () => {
@@ -50,7 +52,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (appState) {
       case AppState.AUTHENTICATING:
-        return <AuthScreen onSuccess={handleAuthenticationSuccess} />;
+        return <AuthScreen onSuccess={handleAuthenticationSuccess} initialError={error} />;
       case AppState.SELECTING_BOX:
         return <SelectionScreen onBoxSelect={handleBoxSelect} />;
       case AppState.GENERATING_VIDEO:
@@ -74,7 +76,7 @@ const App: React.FC = () => {
         }
         return <ResultScreen videoUrl={generatedVideoUrl} onReset={handleReset} />;
       default:
-        return <AuthScreen onSuccess={handleAuthenticationSuccess} />;
+        return <AuthScreen onSuccess={handleAuthenticationSuccess} initialError={error}/>;
     }
   };
 

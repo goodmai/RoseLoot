@@ -42,7 +42,8 @@ export const generateRoseVideo = async (box: LootBox, onProgress: (message: stri
                 const newAiClient = getAiClient();
                 operation = await newAiClient.operations.getVideosOperation({ operation: operation });
             } catch(e: any) {
-                if (e.message.includes("Requested entity was not found.")) {
+                const errorMessage = e.message || (typeof e === 'object' ? JSON.stringify(e) : String(e));
+                if (errorMessage.includes("Requested entity was not found.")) {
                     throw new Error("API key error: The provided key is invalid or not configured for the Veo API. Please go back and select a different key.");
                 }
                 // Re-throw other polling errors
@@ -75,9 +76,14 @@ export const generateRoseVideo = async (box: LootBox, onProgress: (message: stri
             throw new Error(`Download failed: Could not retrieve the generated video. Please check your network connection. Details: ${downloadError.message}`);
         }
     } catch (error: any) {
-        // Catch all other errors from the process and re-throw
         console.error("An unexpected error occurred in generateRoseVideo:", error);
-        // The message is already user-friendly from the inner catches, or it's a new one.
+        
+        const errorMessage = error.message || (typeof error === 'object' ? JSON.stringify(error) : String(error));
+        if (errorMessage.includes("Requested entity was not found.")) {
+             throw new Error("API key error: The provided key is invalid or not configured for the Veo API. Please go back and select a different key.");
+        }
+
+        // The message could already be user-friendly from an inner catch, or it's a new one.
         throw new Error(error.message || "An unexpected error occurred during video generation.");
     }
 };

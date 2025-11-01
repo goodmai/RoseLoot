@@ -1,11 +1,11 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 
 interface AuthScreenProps {
   onSuccess: () => void;
+  initialError?: string | null;
 }
 
-const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
+const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess, initialError }) => {
   const [apiKeySelected, setApiKeySelected] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
 
@@ -28,8 +28,14 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
   }, [onSuccess]);
 
   useEffect(() => {
-    checkApiKey();
-  }, [checkApiKey]);
+    // Only check if there isn't an initial error telling us the key is bad.
+    if (!initialError) {
+        checkApiKey();
+    } else {
+        setIsChecking(false);
+        setApiKeySelected(false);
+    }
+  }, [checkApiKey, initialError]);
 
   const handleSelectKey = async () => {
     if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
@@ -49,6 +55,13 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
         <p className="text-gray-300 text-lg mb-8 max-w-2xl">
             Create stunning video animations of magical loot boxes blooming with roses, powered by Gemini.
         </p>
+
+        {initialError && (
+             <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300 max-w-xl mx-auto">
+                <p className="font-bold text-lg mb-1">Authentication Error</p>
+                <p>{initialError}</p>
+            </div>
+        )}
 
         {isChecking ? (
             <p className="text-gray-400">Checking API Key status...</p>
