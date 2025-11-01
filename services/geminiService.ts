@@ -15,10 +15,10 @@ export const generateRoseVideo = async (box: LootBox, onProgress: (message: stri
         
         const ai = getAiClient();
         
-        const oddRoseCounts = [3, 5, 7, 9, 11];
-        const roseCount = oddRoseCounts[Math.floor(Math.random() * oddRoseCounts.length)];
+        const roseCount = 99;
+        const roseColor = 'red';
 
-        const prompt = `A cinematic, magical 3D animation of a single, ornate, glowing ${box.color} loot box. The box shakes and then bursts open, releasing a beautiful explosion of ${roseCount} realistic, matching ${box.color} roses. The roses gracefully float and swirl in the air. Hyper-detailed, 8k, fantasy, ethereal lighting.`;
+        const prompt = `Photorealistic, cinematic 3D animation. An ornate, glowing ${box.color} loot box is centered in the frame. The box trembles with magical energy, then bursts open. A spectacular popup explosion of ${roseCount} vibrant, deep ${roseColor} roses erupts from the box. The roses are hyper-realistic with detailed petals and dew drops. They float and dance in the air with ethereal, swirling particle effects. The lighting is dramatic and magical. 8k, ultra high detail, trending on artstation.`;
 
         onProgress('Sending request to the video model...');
         let operation = await ai.models.generateVideos({
