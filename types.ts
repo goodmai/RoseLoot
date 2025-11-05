@@ -13,3 +13,5 @@ export enum AppState {
   GENERATING_VIDEO,
   VIDEO_READY,
 }
+
+// Global type declarations are in types/global.d.ts
