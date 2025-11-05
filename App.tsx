@@ -5,6 +5,7 @@ import AuthScreen from './components/AuthScreen';
 import SelectionScreen from './components/SelectionScreen';
 import GenerationScreen from './components/GenerationScreen';
 import ResultScreen from './components/ResultScreen';
+import Header from './components/Header';
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>(AppState.AUTHENTICATING);
@@ -81,9 +82,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans relative overflow-hidden">
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center font-sans relative overflow-hidden">
+        <Header 
+          appState={appState} 
+          onAuthenticationSuccess={handleAuthenticationSuccess}
+        />
         <div className="absolute inset-0 bg-grid-gray-700/[0.2] bg-[length:20px_20px] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <main className="z-10 w-full max-w-5xl">
+        <main className="z-10 w-full max-w-5xl flex-1 flex items-center justify-center p-4 pt-20">
             {renderContent()}
         </main>
     </div>

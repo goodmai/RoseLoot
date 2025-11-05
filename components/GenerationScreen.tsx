@@ -72,8 +72,8 @@ const GenerationScreen: React.FC<GenerationScreenProps> = ({ box, onVideoGenerat
   };
   
   return (
-    <div className="flex flex-col items-center justify-center text-center animate-fade-in">
-        <button onClick={onBack} className="absolute top-4 left-4 text-gray-400 hover:text-white transition-colors disabled:opacity-50" disabled={isOpening || isGenerating}>
+    <div className="flex flex-col items-center justify-center text-center animate-fade-in relative">
+        <button onClick={onBack} className="absolute top-0 left-4 text-gray-400 hover:text-white transition-colors disabled:opacity-50" disabled={isOpening || isGenerating}>
             &larr; Back to Selection
         </button>
         <h2 className="text-3xl font-bold mb-6">Your Chosen Box</h2>
